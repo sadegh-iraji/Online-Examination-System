@@ -59,21 +59,26 @@ public class ManagerController {
                                   @RequestParam String firstname,
                                   @RequestParam String lastname,
                                   @RequestParam String username,
-                                  @RequestParam String isActive) {
-        User user = userService.findUserById(Long.parseLong(id));
-        String userFirstname = user.getFirstname();
-        String userLastname = user.getLastname();
-        String userUsername = user.getUsername();
-        Boolean userIsActive = user.getIsActive();
-        if (!firstname.isEmpty()) userFirstname = firstname;
-        if (!lastname.isEmpty()) userLastname = lastname;
-        if (!username.isEmpty()) userUsername = username;
-        if (!isActive.isEmpty()) userIsActive = Boolean.parseBoolean(isActive);
-        user.setFirstname(userFirstname);
-        user.setLastname(userLastname);
-        user.setUsername(userUsername);
-        user.setIsActive(userIsActive);
-        userService.save(user);
+                                  @RequestParam String isActive,
+                                  ModelMap modelMap) {
+        if (userService.existsUserByUsername(username)){
+            modelMap.addAttribute("message", "کاربر با این نام کاربری موجود است");
+        } else {
+            User user = userService.findUserById(Long.parseLong(id));
+            String userFirstname = user.getFirstname();
+            String userLastname = user.getLastname();
+            String userUsername = user.getUsername();
+            Boolean userIsActive = user.getIsActive();
+            if (!firstname.isEmpty()) userFirstname = firstname;
+            if (!lastname.isEmpty()) userLastname = lastname;
+            if (!username.isEmpty()) userUsername = username;
+            if (!isActive.isEmpty()) userIsActive = Boolean.parseBoolean(isActive);
+            user.setFirstname(userFirstname);
+            user.setLastname(userLastname);
+            user.setUsername(userUsername);
+            user.setIsActive(userIsActive);
+            userService.save(user);
+        }
         return "/manager/editUserConfirm";
     }
 
