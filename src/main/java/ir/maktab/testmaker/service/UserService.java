@@ -18,5 +18,6 @@ public interface UserService {
 
     List<User> findUsersByUserTypeOrUserType(UserType userType1, UserType userType2);
 
+    Boolean existsUserByUsername(String username);
 
 }

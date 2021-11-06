@@ -65,14 +65,19 @@ public class UserController {
                               @RequestParam String password,
                               @RequestParam String firstname,
                               @RequestParam String lastname,
-                              @RequestParam String userType) {
-        UserType registerUserType = UserType.valueOf(userType);
-        if (registerUserType.equals(UserType.TEACHER)) {
-            Teacher teacher = new Teacher(firstname, lastname, username, password, UserType.TEACHER, false);
-            userService.save(teacher);
+                              @RequestParam String userType,
+                              ModelMap modelMap) {
+        if (userService.existsUserByUsername(username)){
+            modelMap.addAttribute("message", "کاربر با این نام کاربری موجود است");
         } else {
-            Student student = new Student(firstname, lastname, username, password, UserType.STUDENT, false);
-            userService.save(student);
+            UserType registerUserType = UserType.valueOf(userType);
+            if (registerUserType.equals(UserType.TEACHER)) {
+                Teacher teacher = new Teacher(firstname, lastname, username, password, UserType.TEACHER, false);
+                userService.save(teacher);
+            } else {
+                Student student = new Student(firstname, lastname, username, password, UserType.STUDENT, false);
+                userService.save(student);
+            }
         }
         return "logupResult";
     }

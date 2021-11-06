@@ -22,12 +22,12 @@
             <td align='left'><input type='text' required='required' pattern='.+' name='subject' id='subject'></td>
         </tr>
         <tr>
-            <td align='right'><label for='startDate'>تاریخ شروع دوره : </label></td>
-            <td align='left'><input type='date' required='required' pattern='.+' name='startDate' id='startDate'></td>
+            <td align='right'><label for='start'>تاریخ شروع دوره : </label></td>
+            <td align='left'><input type='date' required='required' name='startDate' id='start'></td>
         </tr>
         <tr>
-            <td align='right'><label for='finishDate'>تاریخ پایان دوره : </label></td>
-            <td align='left'><input type='date' required='required' pattern='.+' name='finishDate' id='finishDate'></td>
+            <td align='right'><label for='end'>تاریخ پایان دوره : </label></td>
+            <td align='left'><input type='date' required='required' name='finishDate' id='end'></td>
         </tr>
         <tr>
             <td align='right'><label for='capacity'>ظرفیت دوره : </label></td>
@@ -39,6 +39,20 @@
             <td><input type='submit' value='ثبت دوره جدید'></td>
         </tr>
     </table>
+
+    <script>
+        var start = document.getElementById('start');
+        var end = document.getElementById('end');
+
+        start.addEventListener('change', function () {
+            if (start.value)
+                end.min = start.value;
+        }, false);
+        end.addEventLiseter('change', function () {
+            if (end.value)
+                start.max = end.value;
+        }, false);
+    </script>
 </form>
 </body>
 </html>

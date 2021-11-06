@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findUsersByUserTypeOrUserType(UserType userType1, UserType userType2) {
         return userRepository.findUsersByUserTypeOrUserType(userType1,userType2);
     }
+
+    @Override
+    public Boolean existsUserByUsername(String username) {
+        return userRepository.existsUserByUsername(username);
+    }
 }
