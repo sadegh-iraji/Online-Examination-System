@@ -10,6 +10,10 @@ public interface TeacherService {
 
     Teacher findTeacherByIdAndIsActive(Long id, boolean isActive);
 
+    Teacher findTeacherByUsername(String username);
+
+    Teacher findTeacherByUsernameWithCourses(String username);
+
     List<Teacher> findTeachersByIsActive(boolean isActive);
 
     List<Teacher> findAll();

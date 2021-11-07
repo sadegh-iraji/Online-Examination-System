@@ -29,6 +29,7 @@ public class SecurityUser implements UserDetails {
                     .forEach(role -> {
                                 authorities.add(new SimpleGrantedAuthority("ROLE_".concat(role.getName())
                                 ));
+                                /*
                                 if (!role.getOperations().isEmpty() && role.getOperations() != null) {
                                     role.getOperations().forEach(operation ->
                                             authorities.add(new SimpleGrantedAuthority(operation.getName())));

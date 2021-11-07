@@ -27,6 +27,16 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher findTeacherByUsername(String username) {
+        return teacherRepository.findTeacherByUsername(username);
+    }
+
+    @Override
+    public Teacher findTeacherByUsernameWithCourses(String username) {
+        return teacherRepository.findTeacherByUsernameWithCourses(username);
+    }
+
+    @Override
     public List<Teacher> findTeachersByIsActive(boolean isActive) {
         return teacherRepository.findTeachersByIsActive(isActive);
     }
