@@ -5,9 +5,11 @@ import ir.maktab.testmaker.model.Teacher;
 import ir.maktab.testmaker.model.Test;
 import ir.maktab.testmaker.service.CourseService;
 import ir.maktab.testmaker.service.TeacherService;
+import ir.maktab.testmaker.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,8 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     private final CourseService courseService;
+
+    private final TestService testService;
 
     @GetMapping("/teacherMenu")
     public String teacherMenu(){
@@ -51,5 +55,48 @@ public class TeacherController {
         modelMap.addAttribute("courseTests", courseTests);
         modelMap.addAttribute("teacher", teacher);
         return "/teacher/courseTests";
+    }
+
+    @PostMapping("addNewTest")
+    public String addNewTest(@RequestParam String courseId,
+                             ModelMap modelMap){
+        Course course = courseService.findCourseById(Long.parseLong(courseId));
+        modelMap.addAttribute("course", course);
+        return "/teacher/addNewTest";
+    }
+
+    @PostMapping("testCreated")
+    @Transactional
+    public String testCreated(@RequestParam String courseId,
+                              @RequestParam String subject,
+                              @RequestParam String description,
+                              @RequestParam String time,
+                              ModelMap modelMap){
+        try {
+            Course course = courseService.findCourseByIdWithTests(Long.parseLong(courseId));
+            Test test = new Test(subject, description, Integer.parseInt(time));
+            course.getTests().add(test);
+            courseService.save(course);
+        } catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("message", "مشکلی پیش آمده است");
+        }
+
+        return "/teacher/testCreated";
+    }
+
+    @PostMapping("deleteTest")
+    @Transactional
+    public String deleteTest(@RequestParam String testId,
+                             ModelMap modelMap){
+        try {
+            Test test = testService.findTestById(Long.parseLong(testId));
+            testService.delete(test);
+        } catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("message","مشکلی پیش آمده است");
+        }
+
+        return "/teacher/deleteTest";
     }
 }

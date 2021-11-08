@@ -26,7 +26,7 @@
 
 <div align="center">
     <form action="addNewTest" method="post">
-        <input type="hidden" name="id" value="${course.id}">
+        <input type="hidden" name="courseId" value="${course.id}">
         <input type="submit" value="افزودن آزمون جدید به دوره" class="button-1">
     </form>
 </div>
