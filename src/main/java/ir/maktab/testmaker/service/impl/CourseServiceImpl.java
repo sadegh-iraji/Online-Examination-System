@@ -28,6 +28,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Course findCourseByIdWithTests(Long id) {
+        return findCourseByIdWithTests(id);
+    }
+
+    @Override
     public Course save(Course course) {
         return courseRepository.save(course);
     }

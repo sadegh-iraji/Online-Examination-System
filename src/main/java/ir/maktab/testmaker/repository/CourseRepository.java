@@ -15,4 +15,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
         @EntityGraph(attributePaths = "students")
         @Query("SELECT c from Course c where c.id=:id")
         Course findCourseByIdWithStudents(@Param("id") Long id);
+
+        @EntityGraph(attributePaths = "tests")
+        @Query("SELECT c from Course c where c.id=:id")
+        Course findCourseByIdWithTests(@Param("id") Long id);
 }
