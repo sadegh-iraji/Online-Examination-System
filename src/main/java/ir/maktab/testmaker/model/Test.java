@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -44,4 +43,7 @@ public class Test extends BaseEntity<Long> {
         this.description = description;
         this.time = time;
     }
+
+    @OneToMany(mappedBy = "test")
+    private List<Tasq> tasqList = new ArrayList<>();
 }

@@ -42,4 +42,7 @@ public class Course extends BaseEntity<Long> {
     @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
     private List<Test> tests = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
+    private List<Question> questions = new ArrayList<>();
+
 }
