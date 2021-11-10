@@ -33,11 +33,13 @@ public class ManagerController {
 
     final StudentService studentService;
 
+    // main menu for manager
     @GetMapping("/managerMenu")
     public String managerMenu() {
         return "/manager/managerMenu";
     }
 
+    // show all users to manager
     @GetMapping("/registeredUsers")
     public String registeredUsers(ModelMap modelMap) {
         List<User> registeredUsers = userService.findUsersByUserTypeOrUserType(UserType.TEACHER, UserType.STUDENT);
@@ -45,6 +47,7 @@ public class ManagerController {
         return "/manager/registeredUsers";
     }
 
+    // edit information of a registered user
     @PostMapping("/editUser")
     public String editUser(@RequestParam String userId,
                            ModelMap modelMap) {
@@ -53,6 +56,7 @@ public class ManagerController {
         return "/manager/editUser";
     }
 
+    // confirmation for editing a user
     @GetMapping("/editUserConfirm")
     @Transactional
     public String editUserConfirm(@RequestParam String id,
@@ -82,11 +86,13 @@ public class ManagerController {
         return "/manager/editUserConfirm";
     }
 
+    // controller for enter new course data in jsp
     @GetMapping("/newCourse")
     public String newCourse() {
         return "/manager/newCourse";
     }
 
+    // saving new course information
     @PostMapping("/courseCreated")
     @Transactional
     public String courseCreated(@RequestParam String subject,
@@ -99,6 +105,7 @@ public class ManagerController {
         return "/manager/courseCreated";
     }
 
+    // show all courses
     @GetMapping("/courses")
     public String courses(ModelMap modelMap) {
         List<Course> courses = courseService.findAll();
@@ -106,16 +113,19 @@ public class ManagerController {
         return "/manager/courses";
     }
 
+    // set a teacher for a course that has no teacher
     @PostMapping("/courseTeacherSet")
     public String courseTeacherSet(@RequestParam String id,
                                    ModelMap modelMap) {
         Course course = courseService.findCourseById(Long.parseLong(id));
+        /*finding all the teachers that have been activated by the manager*/
         List<Teacher> teachers = teacherService.findTeachersByIsActive(true);
         modelMap.addAttribute("course", course);
         modelMap.addAttribute("teachers", teachers);
         return "/manager/courseTeacherSet";
     }
 
+    // confirmation of setting new teacher for the course
     @PostMapping("/courseTeacherSetConfirm")
     @Transactional
     public String courseTeacherSetConfirm(@RequestParam String teacherId,
@@ -127,10 +137,12 @@ public class ManagerController {
         return "/manager/courseTeacherSetConfirm";
     }
 
+    // show all students added to a course
     @PostMapping("/courseStudents")
     public String courseStudents(@RequestParam String id,
                                  ModelMap modelMap) {
 
+        /*finding all the courses by fetching their students information*/
         Course course = courseService.findCourseByIdWithStudents(Long.parseLong(id));
         List<Student> students = course.getStudents();
         modelMap.addAttribute("course", course);
@@ -138,10 +150,12 @@ public class ManagerController {
         return "/manager/courseStudents";
     }
 
+    // remove an student from  a course
     @PostMapping("/removeStudentFromCourse")
     @Transactional
     public String removeStudentFromCourse(@RequestParam String studentId,
                                           @RequestParam String courseId) {
+        /*finding all the courses by fetching their students information*/
         Course course = courseService.findCourseByIdWithStudents(Long.parseLong(courseId));
         Student student = studentService.findStudentById(Long.parseLong(studentId));
         course.getStudents().remove(student);
@@ -152,23 +166,29 @@ public class ManagerController {
         return "/manager/removeStudentFromCourse";
     }
 
+    // add new student to a course
     @PostMapping("/courseAddStudent")
     public String courseAddStudent(@RequestParam String id,
                                    ModelMap modelMap) {
+        /*finding all the courses by fetching their students information*/
         Course course = courseService.findCourseByIdWithStudents(Long.parseLong(id));
+        /*finding all the students that have been activated by the manager*/
         List<Student> students = studentService.findStudentsByIsActive(true);
         List<Student> courseStudents = course.getStudents();
+        /*filter students for show only they are not in the course*/
         if (!courseStudents.isEmpty()) students.removeIf(courseStudents::contains);
         modelMap.addAttribute("course", course);
         modelMap.addAttribute("students", students);
         return "/manager/courseAddStudent";
     }
 
+    // confirmation of adding new student to a course
     @PostMapping("/courseAddStudentConfirm")
     @Transactional
     public String courseAddStudentConfirm(@RequestParam String courseId,
                                           @RequestParam String studentId,
                                           ModelMap modelMap) {
+        /*preventing from null exception*/
         if (!studentId.isEmpty()) {
             Course course = courseService.findCourseByIdWithStudents(Long.parseLong(courseId));
             Student student = studentService.findStudentById(Long.parseLong(studentId));
