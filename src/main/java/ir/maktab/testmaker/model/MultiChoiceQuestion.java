@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MultiChoiceQuestion extends Question {
 
-    @OneToMany(mappedBy = "multiChoiceQuestion")
+    @OneToMany(mappedBy = "multiChoiceQuestion", cascade = CascadeType.ALL)
     private List<Selection> selections = new ArrayList<>();
 
     public MultiChoiceQuestion(String title, String content, QType qType, Course course, Teacher teacher) {
