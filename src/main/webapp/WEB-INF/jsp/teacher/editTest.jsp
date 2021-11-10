@@ -59,6 +59,9 @@
                 <th>
                     حذف
                 </th>
+                <th>
+                    حذف از آزمون
+                </th>
             </tr>
             </thead>
             <c:forEach items="${tasqList}" var="tasq">
@@ -79,6 +82,12 @@
                         <form action="editQuestion" method="post">
                             <input type="hidden" name="questionId" value="<c:out value="${tasq.question.id}"/>">
                             <input type="submit" value="ویرایش سوال" class="button-2">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="deleteQuestionFromTest" method="post">
+                            <input type="hidden" name="tasqId" value="<c:out value="${tasq.id}"/>">
+                            <input type="submit" value="حذف سوال از آزمون" class="button-2">
                         </form>
                     </td>
                     <td>

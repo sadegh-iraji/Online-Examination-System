@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface TasqService {
 
+    Tasq findTasqById(Long id);
+
+    void delete(Tasq tasq);
+
     List<Tasq> findTasqsByTest(Test test);
 
     Tasq save(Tasq tasq);

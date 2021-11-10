@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface TasqRepository extends JpaRepository<Tasq, Long> {
 
+    Tasq findTasqById(Long id);
+
     List<Tasq> findTasqsByTest(Test test);
 }

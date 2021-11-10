@@ -124,6 +124,20 @@ public class TeacherController {
         return "/teacher/deleteQuestion";
     }
 
+    @PostMapping("deleteQuestionFromTest")
+    @Transactional
+    public String deleteQuestionFromTest(@RequestParam String tasqId,
+                                         ModelMap modelMap){
+        try {
+        Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
+        tasqService.delete(tasq);
+        } catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("message", "مشکلی پیش آمده است");
+        }
+        return "/teacher/deleteQuestionFromTest";
+    }
+
     @PostMapping("editTest")
     public String editTest(@RequestParam String testId,
                            ModelMap modelMap) {

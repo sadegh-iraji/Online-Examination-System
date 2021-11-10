@@ -16,6 +16,16 @@ public class TasqServiceImpl implements TasqService {
     private final TasqRepository tasqRepository;
 
     @Override
+    public Tasq findTasqById(Long id) {
+        return tasqRepository.findTasqById(id);
+    }
+
+    @Override
+    public void delete(Tasq tasq) {
+        tasqRepository.delete(tasq);
+    }
+
+    @Override
     public List<Tasq> findTasqsByTest(Test test) {
         return tasqRepository.findTasqsByTest(test);
     }
