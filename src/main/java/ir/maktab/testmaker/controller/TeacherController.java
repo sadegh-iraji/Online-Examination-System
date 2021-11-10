@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -219,5 +220,47 @@ public class TeacherController {
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
         return "/teacher/addNewMSQConfirm";
+    }
+
+    // show question bank of the course to choose question from
+    @PostMapping("addQuestionFromBank")
+    public String addQuestionFromBank(@RequestParam String testId,
+                                      ModelMap modelMap){
+        Test test = testService.findTestById(Long.parseLong(testId));
+        Course course = test.getCourse();
+        /*find question bank of the course*/
+        List<Question> questionsByCourse = questionService.findQuestionsByCourse(course);
+        /*check if the test contains the question*/
+        List<Tasq> tasqsByTest = tasqService.findTasqsByTest(test);
+        List<Question> questionsByTest = new ArrayList<>();
+        for (Tasq tasq : tasqsByTest) {
+            questionsByTest.add(tasq.getQuestion());
+        }
+        questionsByCourse.removeIf(questionsByTest::contains);
+        if (questionsByCourse.isEmpty()){
+            modelMap.addAttribute("message", "سوالی متفاوت از سوالات استفاده شده در آزمون از بانک سوالات یافت نشد");
+        } else {
+            modelMap.addAttribute("questions", questionsByCourse);
+            modelMap.addAttribute("course", course);
+            modelMap.addAttribute("test", test);
+        }
+        return "/teacher/addQuestionFromBank";
+    }
+
+    @PostMapping("addQFromBankConfirm")
+    @Transactional
+    public String addQFromBankConfirm(@RequestParam String testId,
+                                      @RequestParam String questionId,
+                                      ModelMap modelMap){
+        try {
+        Test test = testService.findTestById(Long.parseLong(testId));
+        Question question = questionService.findQuestionById(Long.parseLong(questionId));
+        /*adding question to the test*/
+        tasqService.save(new Tasq(0, question,test));
+        } catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("message", "مشکلی پیش آمده است");
+        }
+        return "/teacher/addQFromBankConfirm";
     }
 }
