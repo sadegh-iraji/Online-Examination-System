@@ -29,4 +29,9 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> findQuestionsByCourse(Course course) {
         return questionRepository.findQuestionsByCourse(course);
     }
+
+    @Override
+    public Question save(Question question) {
+        return questionRepository.save(question);
+    }
 }

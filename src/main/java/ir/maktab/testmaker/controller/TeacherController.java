@@ -277,4 +277,44 @@ public class TeacherController {
         }
         return "/teacher/addQFromBankConfirm";
     }
+
+    @PostMapping("editQuestion")
+    public String editQuestion(@RequestParam String questionId,
+                               ModelMap modelMap){
+        Question question = questionService.findQuestionById(Long.parseLong(questionId));
+        /*redirect to edit page by question type*/
+        switch (question.getQType()){
+            case DQ:
+                DescriptiveQuestion descriptiveQuestion = (DescriptiveQuestion) question;
+                modelMap.addAttribute("descriptiveQuestion", descriptiveQuestion);
+                return "/teacher/dQuestionEdit";
+            case MCQ:
+                MultiChoiceQuestion multiChoiceQuestion = (MultiChoiceQuestion) question;
+                modelMap.addAttribute("mcQuestion", multiChoiceQuestion);
+        }
+        return "/teacher/mcQuestionEdit";
+    }
+
+    @PostMapping("editDQuestionConfirm")
+    @Transactional
+    public String editDQuestionConfirm(@RequestParam String title,
+                                       @RequestParam String content,
+                                       @RequestParam String id,
+                                       ModelMap modelMap){
+        Question question = questionService.findQuestionById(Long.parseLong(id));
+        String questionTitle = question.getTitle();
+        String questionContent = question.getContent();
+        /*check which parameters were edit*/
+        if (!title.isEmpty()) questionTitle = title;
+        if (!content.isEmpty()) questionContent = content;
+        question.setTitle(questionTitle);
+        question.setContent(questionContent);
+        try {
+            questionService.save(question);
+        } catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("message", "مشکلی پیش آمده است");
+        }
+        return "/teacher/editDQuestionConfirm";
+    }
 }

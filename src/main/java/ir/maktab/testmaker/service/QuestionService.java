@@ -12,4 +12,6 @@ public interface QuestionService {
     Question findQuestionById(Long id);
 
     List<Question> findQuestionsByCourse(Course course);
+
+    Question save(Question question);
 }
