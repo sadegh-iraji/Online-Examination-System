@@ -61,7 +61,7 @@
                     <td>
                         <form action="editTest" method="post">
                             <input type="hidden" name="testId" value="<c:out value="${test.id}"/>">
-                            <input type="submit" value="ویرایش آزمون" class="button-2">
+                            <input type="submit" value="مشاهده و ویرایش آزمون" class="button-2">
                         </form>
                     </td>
                     <td>
