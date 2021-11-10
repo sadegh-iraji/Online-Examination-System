@@ -79,7 +79,7 @@
 
 </table>
 
-<p><a href='/home' class='underline'>رفتن به منو</a></p>
+<p><a href='/home' class='underline'>بازگشت به منو</a></p>
 
 <script>
     var $filterableRows = $('#MI6').find('tr').not(':first'),

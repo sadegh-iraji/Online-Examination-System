@@ -78,7 +78,7 @@
 </c:choose>
 
 
-<p><a href='/home' class='underline'>رفتن به منو</a></p>
+<p><a href='/home' class='underline'>بازگشت به منو</a></p>
 
 </body>
 </html>

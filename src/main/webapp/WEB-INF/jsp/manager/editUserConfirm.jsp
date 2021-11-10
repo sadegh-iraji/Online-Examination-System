@@ -18,12 +18,12 @@
     <c:when test="${not empty message}">
         <h1>نام کاربری تکراری است</h1>
         <h2><c:out value="${message}"/></h2>
-        <p><a href='/home' class='underline'>بازکشت به منو</a></p>
+        <p><a href='/home' class='underline'>بازگشت به منو</a></p>
     </c:when>
     <c:otherwise>
         <h1>تایید ویرایش کاریر</h1>
-        <h2>اطلاعات کاربر با موفقبت ویرایش گردید.</h2>
-        <p><a href='/home' class='underline'>بازکشت به منو</a></p>
+        <h2>اطلاعات کاربر با موفقیت ویرایش گردید.</h2>
+        <p><a href='/home' class='underline'>بازگشت به منو</a></p>
     </c:otherwise>
 </c:choose>
 </body>

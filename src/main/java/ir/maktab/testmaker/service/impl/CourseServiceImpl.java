@@ -29,7 +29,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course findCourseByIdWithTests(Long id) {
-        return findCourseByIdWithTests(id);
+        return courseRepository.findCourseByIdWithTests(id);
     }
 
     @Override

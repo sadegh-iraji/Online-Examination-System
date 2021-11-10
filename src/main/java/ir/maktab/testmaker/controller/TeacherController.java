@@ -30,12 +30,12 @@ public class TeacherController {
     private final TestService testService;
 
     @GetMapping("/teacherMenu")
-    public String teacherMenu(){
+    public String teacherMenu() {
         return "/teacher/teacherMenu";
     }
 
     @GetMapping("/teacherCourses")
-    public String teacherCourses(ModelMap modelMap){
+    public String teacherCourses(ModelMap modelMap) {
         String activeUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Teacher teacher = teacherService.findTeacherByUsernameWithCourses(activeUsername);
         List<Course> teacherCourses = teacher.getCourses();
@@ -45,9 +45,9 @@ public class TeacherController {
     }
 
     @PostMapping("courseTests")
-    public  String courseTests(@RequestParam String courseId,
-                               @RequestParam String teacherId,
-                               ModelMap modelMap){
+    public String courseTests(@RequestParam String courseId,
+                              @RequestParam String teacherId,
+                              ModelMap modelMap) {
         Course course = courseService.findCourseByIdWithTests(Long.parseLong(courseId));
         List<Test> courseTests = course.getTests();
         Teacher teacher = teacherService.findTeacherById(Long.parseLong(teacherId));
@@ -59,7 +59,7 @@ public class TeacherController {
 
     @PostMapping("addNewTest")
     public String addNewTest(@RequestParam String courseId,
-                             ModelMap modelMap){
+                             ModelMap modelMap) {
         Course course = courseService.findCourseById(Long.parseLong(courseId));
         modelMap.addAttribute("course", course);
         return "/teacher/addNewTest";
@@ -71,13 +71,13 @@ public class TeacherController {
                               @RequestParam String subject,
                               @RequestParam String description,
                               @RequestParam String time,
-                              ModelMap modelMap){
+                              ModelMap modelMap) {
         try {
             Course course = courseService.findCourseByIdWithTests(Long.parseLong(courseId));
-            Test test = new Test(subject, description, Integer.parseInt(time));
+            Test test = new Test(subject, description, Integer.parseInt(time), course);
             course.getTests().add(test);
             courseService.save(course);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
@@ -88,15 +88,14 @@ public class TeacherController {
     @PostMapping("deleteTest")
     @Transactional
     public String deleteTest(@RequestParam String testId,
-                             ModelMap modelMap){
+                             ModelMap modelMap) {
         try {
             Test test = testService.findTestById(Long.parseLong(testId));
             testService.delete(test);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            modelMap.addAttribute("message","مشکلی پیش آمده است");
+            modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
-
         return "/teacher/deleteTest";
     }
 }

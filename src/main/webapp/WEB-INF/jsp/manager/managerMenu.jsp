@@ -22,7 +22,6 @@
         <li><a href='manager/newCourse'>تعریف دوره جدید</a></li>
         <li><a href='manager/courses'>مشاهده دوره های موجود</a></li>
         <li><a href='/logout'>خروج</a></li>
-
     </ul>
 </div>
 </html>

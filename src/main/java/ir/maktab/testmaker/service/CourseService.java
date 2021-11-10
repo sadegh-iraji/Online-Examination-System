@@ -11,7 +11,7 @@ public interface CourseService {
 
     Course findCourseByIdWithStudents(Long id);
 
-    Course findCourseByIdWithTests(@Param("id") Long id);
+    Course findCourseByIdWithTests(Long id);
 
     Course save(Course course);
 

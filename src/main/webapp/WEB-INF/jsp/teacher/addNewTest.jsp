@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <td><input type="hidden" value="${course.id}" name="courseId"></td>
-            <td><input type='submit' value='ذخیراه آزمون'></td>
+            <td><input type='submit' value='ذخیره آزمون'></td>
         </tr>
     </table>
 </form>

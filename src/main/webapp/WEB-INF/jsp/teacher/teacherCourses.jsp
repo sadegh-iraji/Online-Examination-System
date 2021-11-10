@@ -14,7 +14,6 @@
     <title>لیست دوره های استاد</title>
 </head>
 <body>
-// if course has any tests .................................................................
 <c:choose>
     <c:when test="${not empty teacherCourses}">
         <h2>دوره های استاد <c:out value="${teacher.lastname}"/></h2>
@@ -63,7 +62,6 @@
             </c:forEach>
         </table>
     </c:when>
-    // if course has no tests .................................................................
     <c:otherwise>
         <h2>استاد <c:out value="${teacher.lastname}"/> هنوز به دوره ای اضافه نشده است</h2>
     </c:otherwise>

@@ -23,9 +23,11 @@
                 <label for="teacherId">انتخاب استاد :</label>
                 <select name="teacherId" id="teacherId">
                     <option value="" disabled selected>لیست اساتید ...</option>
-                    <c:forEach items="${teachers}" var="student">
-                        <option value="<c:out value="${student.id}"/>">
-                            <c:out value="${student.firstname}"/> <c:out value="${student.lastname}"/>
+                    <c:forEach items="${teachers}" var="teacher">
+                        <option value="<c:out value="${teacher.id}"/>">
+                            <c:out value="${teacher.firstname}"/>
+                            <c:out value="${teacher.lastname}"/>
+                            / <c:out value="${teacher.username}"/>
                         </option>
                     </c:forEach>
                 </select>
