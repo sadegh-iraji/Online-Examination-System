@@ -26,6 +26,9 @@
             متن سوال
         </th>
         <th>
+            نمره سوال
+        </th>
+        <th>
             تغییرات گزینه ها
         </th>
         <th>
@@ -39,6 +42,9 @@
         </td>
         <td>
             <c:out value="${mcQuestion.content}"/>
+        </td>
+        <td>
+            <c:out value="${tasq.score}"/>
         </td>
         <td>
             <form action="optionEdit" method="post">
@@ -56,7 +62,11 @@
                 <input type="text" name="content" placeholder="تغییر متن">
             </td>
             <td>
+                <input type="number" name="score" placeholder="تغییر نمره">
+            </td>
+            <td>
                 <input type="hidden" name="id" value="<c:out value="${mcQuestion.id}"/>">
+                <input type="hidden" name="tasqId" value="<c:out value="${tasq.id}"/>">
                 <input type="submit" value="ویرایش سوال" class="button-2">
             </td>
         </form>

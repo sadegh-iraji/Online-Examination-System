@@ -20,7 +20,7 @@
     </c:when>
     <c:otherwise>
         <h1>تایید ویرایش گزینه</h1>
-        <h2>کزینه با موفقیت ویرایش گردید</h2>
+        <h2>گزینه با موفقیت ویرایش گردید</h2>
     </c:otherwise>
 </c:choose>
 <p><a href='/home' class='underline'>رفتن به منو</a></p>

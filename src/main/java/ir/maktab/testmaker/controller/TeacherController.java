@@ -280,8 +280,11 @@ public class TeacherController {
 
     @PostMapping("editQuestion")
     public String editQuestion(@RequestParam String questionId,
+                               @RequestParam String tasqId,
                                ModelMap modelMap){
         Question question = questionService.findQuestionById(Long.parseLong(questionId));
+        Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
+        modelMap.addAttribute("tasq", tasq);
         /*redirect to edit page by question type*/
         switch (question.getQType()){
             case DQ:
@@ -301,17 +304,24 @@ public class TeacherController {
     public String editDQuestionConfirm(@RequestParam String title,
                                        @RequestParam String content,
                                        @RequestParam String id,
+                                       @RequestParam String tasqId,
+                                       @RequestParam String score,
                                        ModelMap modelMap){
         Question question = questionService.findQuestionById(Long.parseLong(id));
+        Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
+        double tasqScore = tasq.getScore();
         String questionTitle = question.getTitle();
         String questionContent = question.getContent();
         /*check which parameters were edit*/
         if (!title.isEmpty()) questionTitle = title;
         if (!content.isEmpty()) questionContent = content;
+        if (!score.isEmpty()) tasqScore = Double.parseDouble(score);
         question.setTitle(questionTitle);
         question.setContent(questionContent);
+        tasq.setScore(tasqScore);
         try {
             questionService.save(question);
+            tasqService.save(tasq);
         } catch (Exception e){
             e.printStackTrace();
             modelMap.addAttribute("message", "مشکلی پیش آمده است");

@@ -26,6 +26,9 @@
             متن سوال
         </th>
         <th>
+            نمره سوال
+        </th>
+        <th>
             تغییرات
         </th>
     </tr>
@@ -37,6 +40,9 @@
         <td>
             <c:out value="${descriptiveQuestion.content}"/>
         </td>
+        <td>
+            <c:out value="${tasq.score}"/>
+        </td>
     </tr>
     <tr>
         <form action="editDQuestionConfirm" method="post">
@@ -47,7 +53,11 @@
                 <input type="text" name="content" placeholder="تغییر متن">
             </td>
             <td>
+                <input type="number" name="score" placeholder="تغییر نمره">
+            </td>
+            <td>
                 <input type="hidden" name="id" value="<c:out value="${descriptiveQuestion.id}"/>">
+                <input type="hidden" name="tasqId" value="<c:out value="${tasq.id}"/>">
                 <input type="submit" value="ویرایش سوال" class="button-2">
             </td>
         </form>

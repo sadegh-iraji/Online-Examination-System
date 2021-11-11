@@ -81,6 +81,7 @@
                     <td>
                         <form action="editQuestion" method="post">
                             <input type="hidden" name="questionId" value="<c:out value="${tasq.question.id}"/>">
+                            <input type="hidden" name="tasqId" value="<c:out value="${tasq.id}"/>">
                             <input type="submit" value="ویرایش سوال" class="button-2">
                         </form>
                     </td>
