@@ -17,4 +17,14 @@ public class MCQServiceImpl implements MCQService {
     public MultiChoiceQuestion save(MultiChoiceQuestion multiChoiceQuestion) {
         return mcqRepository.save(multiChoiceQuestion);
     }
+
+    @Override
+    public MultiChoiceQuestion findMultiChoiceQuestionById(Long id) {
+        return mcqRepository.findMultiChoiceQuestionById(id);
+    }
+
+//    @Override
+//    public MultiChoiceQuestion findMCQByIdWithSelections(Long id) {
+//        return mcqRepository.findMCQByIdWithSelections(id);
+//    }
 }

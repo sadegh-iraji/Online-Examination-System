@@ -17,4 +17,9 @@ public class SelectionServiceImpl implements SelectionService {
     public Selection save(Selection selection) {
         return selectionRepository.save(selection);
     }
+
+    @Override
+    public Selection findSelectionById(Long id) {
+        return selectionRepository.findSelectionById(id);
+    }
 }

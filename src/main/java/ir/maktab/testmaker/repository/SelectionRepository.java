@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SelectionRepository extends JpaRepository<Selection, Long> {
+
+    Selection findSelectionById(Long id);
 }

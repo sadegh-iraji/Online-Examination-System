@@ -295,6 +295,7 @@ public class TeacherController {
         return "/teacher/mcQuestionEdit";
     }
 
+    /*Method uses for saving changes of both kind of Questions*/
     @PostMapping("editDQuestionConfirm")
     @Transactional
     public String editDQuestionConfirm(@RequestParam String title,
@@ -316,5 +317,33 @@ public class TeacherController {
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
         return "/teacher/editDQuestionConfirm";
+    }
+
+    @PostMapping("optionEdit")
+    public String optionEdit(@RequestParam String questionId,
+                             ModelMap modelMap){
+        MultiChoiceQuestion multiChoiceQuestion = mcqService.findMultiChoiceQuestionById(Long.parseLong(questionId));
+        List<Selection> selections = multiChoiceQuestion.getSelections();
+        modelMap.addAttribute("mcQuestion", multiChoiceQuestion);
+        modelMap.addAttribute("options", selections);
+        return "teacher/optionEdit";
+    }
+
+    @PostMapping("editOptionConfirm")
+    @Transactional
+    public String editMCQuestionConfirm(@RequestParam String content,
+                                        @RequestParam String id,
+                                        ModelMap modelMap){
+        Selection selection = selectionService.findSelectionById(Long.parseLong(id));
+        String selectionContent = selection.getContent();
+        if (!content.isEmpty()) selectionContent = content;
+        try {
+            selection.setContent(selectionContent);
+            selectionService.save(selection);
+        } catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("message", "مشکلی پیش آمده است");
+        }
+        return "/teacher/editOptionConfirm";
     }
 }
