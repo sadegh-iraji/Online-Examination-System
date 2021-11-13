@@ -99,6 +99,16 @@
                     </td>
                 </tr>
             </c:forEach>
+            <tfoot>
+            <tr>
+                <td colspan="3">
+                    مجموع نمرات آزمون
+                </td>
+                <td>
+                    <c:out value="${testScore}"/>
+                </td>
+            </tr>
+            </tfoot>
         </table>
 
     </c:when>

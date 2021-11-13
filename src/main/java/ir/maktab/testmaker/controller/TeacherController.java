@@ -144,10 +144,15 @@ public class TeacherController {
         Test test = testService.findTestById(Long.parseLong(testId));
         List<Tasq> tasqList = tasqService.findTasqsByTest(test);
         modelMap.addAttribute("test", test);
+        double testScore = 0;
         if (tasqList.isEmpty()) {
             modelMap.addAttribute("message", "سوالی برای این آزمون ثبت نشده است");
         } else {
+            for (Tasq tasq : tasqList) {
+                testScore += tasq.getScore();
+            }
             modelMap.addAttribute("tasqList", tasqList);
+            modelMap.addAttribute("testScore", testScore);
         }
         return "/teacher/editTest";
     }
