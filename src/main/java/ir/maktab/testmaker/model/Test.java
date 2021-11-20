@@ -25,9 +25,6 @@ public class Test extends BaseEntity<Long> {
 
     private int time;
 
-    @ManyToMany
-    private Set<Student> students = new HashSet<>();
-
     @ManyToOne(cascade = CascadeType.MERGE)
     private Course course;
 
@@ -46,4 +43,7 @@ public class Test extends BaseEntity<Long> {
 
     @OneToMany(mappedBy = "test")
     private List<Tasq> tasqList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "test")
+    private List<Test_Student> test_studentList = new ArrayList<>();
 }

@@ -26,4 +26,7 @@ public class Answer extends BaseEntity<Long> {
     @ManyToOne
     private Tasq tasq;
 
+    @ManyToOne
+    private  Test_Student test_student;
+
 }

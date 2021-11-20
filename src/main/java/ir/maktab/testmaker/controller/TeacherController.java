@@ -116,6 +116,12 @@ public class TeacherController {
                                  ModelMap modelMap) {
         try {
             Question question = questionService.findQuestionById(Long.parseLong(questionId));
+            List<Tasq> tasqs = tasqService.findTasqsByQuestion(question);
+            if (!tasqs.isEmpty()){
+                for (Tasq tasq : tasqs){
+                    tasqService.delete(tasq);
+                }
+            }
             questionService.delete(question);
         } catch (Exception e) {
             e.printStackTrace();

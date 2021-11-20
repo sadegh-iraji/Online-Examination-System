@@ -48,29 +48,29 @@
             تغییرات
         </th>
     </tr>
-    <c:forEach items="${registeredUsers}" var="user">
+    <c:forEach items="${registeredUsers}" var="tasq">
         <tr>
             <td data-input="name">
-                <c:out value="${user.firstname}"/>
+                <c:out value="${tasq.firstname}"/>
             </td>
             <td data-input="lastname">
-                <c:out value="${user.lastname}"/>
+                <c:out value="${tasq.lastname}"/>
             </td>
             <td data-input="username">
-                <c:out value="${user.username}"/>
+                <c:out value="${tasq.username}"/>
             </td>
             <td data-input="role">
-                <c:out value="${user.userType}"/>
+                <c:out value="${tasq.userType}"/>
             </td>
             <td data-input="activation">
                 <c:choose>
-                    <c:when test="${user.isActive}">تایید شده</c:when>
+                    <c:when test="${tasq.isActive}">تایید شده</c:when>
                     <c:otherwise>در انتظار تایید ...</c:otherwise>
                 </c:choose>
             </td>
             <td data-input="change">
                 <form action="editUser" method="post">
-                    <input type="hidden" name="userId" value="<c:out value="${user.id}"/>">
+                    <input type="hidden" name="userId" value="<c:out value="${tasq.id}"/>">
                     <input type="submit" value="ویرایش کاربر" class="button-2">
                 </form>
             </td>

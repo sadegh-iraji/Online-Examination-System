@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8 ">
+    <link rel="stylesheet" href="../styles/style.css" type="text/css">
     <title>منوی دانشجو</title>
 </head>
 <body>
@@ -17,7 +19,6 @@
     <ul>
         <li><a href='student/studentCourses'>مشاهده لیست دوره های دانشجو</a></li>
         <li><a href='/logout'>خروج</a></li>
-
     </ul>
 </div>
 </body>

@@ -38,21 +38,21 @@
                 </th>
             </tr>
             </thead>
-            <c:forEach items="${questions}" var="question">
+            <c:forEach items="${questions}" var="tasq">
                 <tr>
                     <td>
-                        <c:out value="${question.title}"/>
+                        <c:out value="${tasq.title}"/>
                     </td>
                     <td>
-                        <c:out value="${question.content}"/>
+                        <c:out value="${tasq.content}"/>
                     </td>
                     <td>
-                        <c:out value="${question.QType.toString()}"/>
+                        <c:out value="${tasq.QType.toString()}"/>
                     </td>
                     <td>
                         <form action="addQFromBankConfirm" method="post">
                             <input type="hidden" name="testId" value="${test.id}">
-                            <input type="hidden" name="questionId" value="<c:out value="${question.id}"/>">
+                            <input type="hidden" name="questionId" value="<c:out value="${tasq.id}"/>">
                             <input type="submit" value="انتخاب سوال" class="button-2">
                         </form>
                     </td>

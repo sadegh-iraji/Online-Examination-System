@@ -30,4 +30,14 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findStudentsByIsActive(boolean isActive) {
         return studentRepository.findStudentsByIsActive(isActive);
     }
+
+    @Override
+    public Student findStudentByUsernameWithCourses(String username) {
+        return studentRepository.findStudentByUsernameWithCourses(username);
+    }
+
+    @Override
+    public Student findStudentByUsername(String username) {
+        return studentRepository.findStudentByUsername(username);
+    }
 }

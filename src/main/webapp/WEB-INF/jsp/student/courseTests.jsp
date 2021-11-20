@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: SadegH
   Date: 11/13/2021
-  Time: 11:52 AM
+  Time: 3:29 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,55 +11,50 @@
 <head>
     <meta charset="UTF-8 ">
     <link rel="stylesheet" href="../styles/style.css" type="text/css">
-    <title>لیست دوره های دانشجو</title>
+    <title>آزمون های دوره</title>
 </head>
 <body>
 <c:choose>
-    <c:when test="${not empty message}">
-        <c:out value="${message}"/>
-    </c:when>
-    <c:otherwise>
-        <h2>دوره های دانشجو <c:out value="${student.lastname}"/></h2>
+    <c:when test="${not empty courseTests}">
+        <h2>آزمون های دوره <c:out value="${course.subject}"/> </h2>
         <table align="center" class="border-table">
             <thead>
             <tr>
                 <th>
-                    عنوان دوره
+                    عنوان آزمون
                 </th>
                 <th>
-                    تاریخ شروع دوره
+                    زمان آزمون
                 </th>
                 <th>
-                    تاریخ پایان دوره
-                </th>
-                <th>
-                    آزمون های دوره
+                    شرکت در آزمون
                 </th>
             </tr>
             </thead>
-            <c:forEach items="${courses}" var="course">
+            <c:forEach items="${courseTests}" var="test">
                 <tr>
                     <td>
-                        <c:out value="${course.subject}"/>
+                        <c:out value="${test.subject}"/>
                     </td>
                     <td>
-                        <c:out value="${course.startDate}"/>
+                        <c:out value="${test.time}"/>
                     </td>
                     <td>
-                        <c:out value="${course.finishDate}"/>
-                    </td>
-                    <td>
-                        <form action="courseTests" method="post">
-                            <input type="hidden" name="courseId" value="<c:out value="${course.id}"/>">
+                        <form action="startTest" method="post">
+                            <input type="hidden" name="testId" value="<c:out value="${test.id}"/>">
                             <input type="hidden" name="studentId" value="<c:out value="${student.id}"/>">
-                            <input type="submit" value="مشاهده آزمون های دوره" class="button-2">
+                            <input type="submit" value="شروع آزمون" class="button-2">
                         </form>
                     </td>
                 </tr>
             </c:forEach>
         </table>
+    </c:when>
+    <c:otherwise>
+        <h2>برای دوره <c:out value="${course.subject}"/>  آزمونی ثبت نشده یا قبلا در تمامی آنها شرکت کرده اید</h2>
     </c:otherwise>
 </c:choose>
+
 <p><a href='/home' class='underline'>رفتن به منو</a></p>
 </body>
 </html>
