@@ -48,6 +48,9 @@
                 <th>
                     حذف
                 </th>
+                <th>
+                    نتایج آزمون
+                </th>
             </tr>
             </thead>
             <c:forEach items="${courseTests}" var="test">
@@ -68,6 +71,12 @@
                         <form action="deleteTest" method="post">
                             <input type="hidden" name="testId" value="<c:out value="${test.id}"/>">
                             <input type="submit" value="حذف آزمون" class="button-2">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="testResults" method="post">
+                            <input type="hidden" name="testId" value="<c:out value="${test.id}"/>">
+                            <input type="submit" value="تصحیح نتایج" class="button-2">
                         </form>
                     </td>
                 </tr>

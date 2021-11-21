@@ -8,11 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,10 @@ public class TeacherController {
     private final SelectionService selectionService;
 
     private final MCQService mcqService;
+
+    private final Test_StudentService test_studentService;
+
+    private final AnswerService answerService;
 
     // Main Menu of Teacher
     @GetMapping("/teacherMenu")
@@ -117,8 +119,8 @@ public class TeacherController {
         try {
             Question question = questionService.findQuestionById(Long.parseLong(questionId));
             List<Tasq> tasqs = tasqService.findTasqsByQuestion(question);
-            if (!tasqs.isEmpty()){
-                for (Tasq tasq : tasqs){
+            if (!tasqs.isEmpty()) {
+                for (Tasq tasq : tasqs) {
                     tasqService.delete(tasq);
                 }
             }
@@ -133,11 +135,11 @@ public class TeacherController {
     @PostMapping("deleteQuestionFromTest")
     @Transactional
     public String deleteQuestionFromTest(@RequestParam String tasqId,
-                                         ModelMap modelMap){
+                                         ModelMap modelMap) {
         try {
-        Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
-        tasqService.delete(tasq);
-        } catch (Exception e){
+            Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
+            tasqService.delete(tasq);
+        } catch (Exception e) {
             e.printStackTrace();
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
@@ -250,7 +252,7 @@ public class TeacherController {
     // show question bank of the course to choose question from
     @PostMapping("addQuestionFromBank")
     public String addQuestionFromBank(@RequestParam String testId,
-                                      ModelMap modelMap){
+                                      ModelMap modelMap) {
         Test test = testService.findTestById(Long.parseLong(testId));
         Course course = test.getCourse();
         /*find question bank of the course*/
@@ -262,7 +264,7 @@ public class TeacherController {
             questionsByTest.add(tasq.getQuestion());
         }
         questionsByCourse.removeIf(questionsByTest::contains);
-        if (questionsByCourse.isEmpty()){
+        if (questionsByCourse.isEmpty()) {
             modelMap.addAttribute("message", "سوالی متفاوت از سوالات استفاده شده در آزمون از بانک سوالات یافت نشد");
         } else {
             modelMap.addAttribute("questions", questionsByCourse);
@@ -276,13 +278,13 @@ public class TeacherController {
     @Transactional
     public String addQFromBankConfirm(@RequestParam String testId,
                                       @RequestParam String questionId,
-                                      ModelMap modelMap){
+                                      ModelMap modelMap) {
         try {
-        Test test = testService.findTestById(Long.parseLong(testId));
-        Question question = questionService.findQuestionById(Long.parseLong(questionId));
-        /*adding question to the test*/
-        tasqService.save(new Tasq(0, question,test));
-        } catch (Exception e){
+            Test test = testService.findTestById(Long.parseLong(testId));
+            Question question = questionService.findQuestionById(Long.parseLong(questionId));
+            /*adding question to the test*/
+            tasqService.save(new Tasq(0, question, test));
+        } catch (Exception e) {
             e.printStackTrace();
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
@@ -292,12 +294,12 @@ public class TeacherController {
     @PostMapping("editQuestion")
     public String editQuestion(@RequestParam String questionId,
                                @RequestParam String tasqId,
-                               ModelMap modelMap){
+                               ModelMap modelMap) {
         Question question = questionService.findQuestionById(Long.parseLong(questionId));
         Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
         modelMap.addAttribute("tasq", tasq);
         /*redirect to edit page by question type*/
-        switch (question.getQType()){
+        switch (question.getQType()) {
             case DQ:
                 DescriptiveQuestion descriptiveQuestion = (DescriptiveQuestion) question;
                 modelMap.addAttribute("descriptiveQuestion", descriptiveQuestion);
@@ -317,7 +319,7 @@ public class TeacherController {
                                        @RequestParam String id,
                                        @RequestParam String tasqId,
                                        @RequestParam String score,
-                                       ModelMap modelMap){
+                                       ModelMap modelMap) {
         Question question = questionService.findQuestionById(Long.parseLong(id));
         Tasq tasq = tasqService.findTasqById(Long.parseLong(tasqId));
         double tasqScore = tasq.getScore();
@@ -333,7 +335,7 @@ public class TeacherController {
         try {
             questionService.save(question);
             tasqService.save(tasq);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
@@ -342,7 +344,7 @@ public class TeacherController {
 
     @PostMapping("optionEdit")
     public String optionEdit(@RequestParam String questionId,
-                             ModelMap modelMap){
+                             ModelMap modelMap) {
         MultiChoiceQuestion multiChoiceQuestion = mcqService.findMultiChoiceQuestionById(Long.parseLong(questionId));
         List<Selection> selections = multiChoiceQuestion.getSelections();
         modelMap.addAttribute("mcQuestion", multiChoiceQuestion);
@@ -354,17 +356,73 @@ public class TeacherController {
     @Transactional
     public String editMCQuestionConfirm(@RequestParam String content,
                                         @RequestParam String id,
-                                        ModelMap modelMap){
+                                        ModelMap modelMap) {
         Selection selection = selectionService.findSelectionById(Long.parseLong(id));
         String selectionContent = selection.getContent();
         if (!content.isEmpty()) selectionContent = content;
         try {
             selection.setContent(selectionContent);
             selectionService.save(selection);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             modelMap.addAttribute("message", "مشکلی پیش آمده است");
         }
         return "/teacher/editOptionConfirm";
+    }
+
+    @PostMapping("testResults")
+    public String testResults(@RequestParam String testId,
+                              ModelMap modelMap) {
+        Test test = testService.findTestById(Long.parseLong(testId));
+        List<Test_Student> test_studentsByTest = test_studentService.findTest_StudentsByTest(test);
+        // check if test is in progress
+        test_studentsByTest.removeIf(test_student -> test_student.getFinishTime().isAfter(LocalDateTime.now()));
+        // check if there is students took the test
+        modelMap.addAttribute("message", "تا کنون دانشجویی در آزمون شرکت نکرده است");
+        modelMap.addAttribute("test_students", test_studentsByTest);
+        modelMap.addAttribute("test", test);
+        return "/teacher/testResults";
+    }
+
+    @PostMapping("editResult")
+    public String editResult(@RequestParam String test_studentId,
+                             ModelMap modelMap) {
+        Test_Student test_student = test_studentService.findTest_StudentByIdWithAnswers(Long.parseLong(test_studentId));
+        List<Answer> answers = test_student.getAnswers();
+        modelMap.addAttribute("test_student", test_student);
+        modelMap.addAttribute("answers", answers);
+        modelMap.addAttribute("DQ", QType.DQ);
+        return "/teacher/editResult";
+    }
+
+    @PostMapping("editAnswerScore")
+    public @ResponseBody
+    double editAnswerScore(@RequestParam String answerId,
+                           @RequestParam String answerScore,
+                           @RequestParam String test_studentId,
+                           ModelMap modelMap) {
+        Test_Student test_student = test_studentService.findTest_StudentByIdWithAnswers(Long.parseLong(test_studentId));
+        Answer answerById = answerService.findAnswerById(Long.parseLong(answerId));
+        double score = Double.parseDouble(answerScore);
+        // check if score is not bigger than question score and not minus
+        if (score > answerById.getTasq().getScore()) {
+            score = answerById.getTasq().getScore();
+        } else if (score < 0) {
+            score = 0;
+        }
+        // update score of the question
+        answerById.setScore(score);
+        answerService.save(answerById);
+        // update student's total score
+        double totalScore = 0;
+        for (Answer answer : test_student.getAnswers()) {
+            totalScore += answer.getScore();
+        }
+        test_student.setTotalScore(totalScore);
+        test_studentService.save(test_student);
+        modelMap.addAttribute("test_student", test_student);
+        modelMap.addAttribute("answers", test_student.getAnswers());
+        modelMap.addAttribute("DQ", QType.DQ);
+        return totalScore;
     }
 }

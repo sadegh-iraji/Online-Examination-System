@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,15 @@ public class Test_StudentServiceImpl implements Test_StudentService {
     @Transactional
     public Test_Student save(Test_Student test_student) {
         return test_studentRepository.save(test_student);
+    }
+
+    @Override
+    public Test_Student findTest_StudentByIdWithAnswers(Long id) {
+        return test_studentRepository.findTest_StudentByIdWithAnswers(id);
+    }
+
+    @Override
+    public List<Test_Student> findTest_StudentsByTest(Test test) {
+        return test_studentRepository.findTest_StudentsByTest(test);
     }
 }

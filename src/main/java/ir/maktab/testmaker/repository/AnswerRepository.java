@@ -15,4 +15,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     List<Answer> findAnswersByStudent(Student student);
 
     Optional<Answer> findAnswerByStudentAndTasq(Student student, Tasq tasq);
+
+    Answer findAnswerById(Long id);
 }

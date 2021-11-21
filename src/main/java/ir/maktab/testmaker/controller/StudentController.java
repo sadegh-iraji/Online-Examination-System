@@ -93,7 +93,7 @@ public class StudentController {
             tasqsByTest = tasqService.findTasqsByTest(test);
             Optional<Test_Student> optionalTest_student = test_studentService.findTest_StudentsByTestAndStudent(test, student);
             if (optionalTest_student.isEmpty()) {
-                test_student = new Test_Student(LocalDateTime.now().plusMinutes((long) test.getTime()), 0, student, test);
+                test_student = new Test_Student(LocalDateTime.now().plusMinutes((long) test.getTime()), student, test);
                 test_studentService.save(test_student);
             } else {
                 test_student = optionalTest_student.get();

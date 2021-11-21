@@ -32,9 +32,8 @@ public class Test_Student extends BaseEntity<Long> {
     @OneToMany(mappedBy = "test_student")
     List<Answer> answers = new ArrayList<>();
 
-    public Test_Student(LocalDateTime finishTime, double totalScore, Student student, Test test) {
+    public Test_Student(LocalDateTime finishTime, Student student, Test test) {
         this.finishTime = finishTime;
-        this.totalScore = totalScore;
         this.student = student;
         this.test = test;
     }

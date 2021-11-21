@@ -35,4 +35,9 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAnswerByStudentAndTasq(student, tasq);
     }
 
+    @Override
+    public Answer findAnswerById(Long id) {
+        return answerRepository.findAnswerById(id);
+    }
+
 }
