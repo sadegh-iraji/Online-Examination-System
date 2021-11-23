@@ -25,6 +25,8 @@ public class Test extends BaseEntity<Long> {
 
     private int time;
 
+    private double testScore;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private Course course;
 

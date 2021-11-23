@@ -158,6 +158,8 @@ public class TeacherController {
         } else {
             for (Tasq tasq : tasqList) {
                 testScore += tasq.getScore();
+                test.setTestScore(testScore);
+                testService.save(test);
             }
             modelMap.addAttribute("tasqList", tasqList);
             modelMap.addAttribute("testScore", testScore);

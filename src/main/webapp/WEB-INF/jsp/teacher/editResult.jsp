@@ -33,14 +33,12 @@
         <tr>
             <td>
                 <p>نوع سوال : <c:out value="${answer.tasq.question.QType.toString()}"/></p>
-                <p>متن سوال :</p>
-                <p><c:out value="${answer.tasq.question.content}"/></p>
-                <p>پاسخ دانشجو :</p>
-                <p><c:out value="${answer.content}"/></p>
+                <p>متن سوال : <c:out value="${answer.tasq.question.content}"/></p>
+                <p> پاسخ دانشجو : <c:out value="${answer.content}"/></p>
             </td>
             <td>
                 <p>نمره سوال : <c:out value="${answer.tasq.score}"/></p>
-                <p>نمره دانشجو :</p>
+                نمره دانشجو :
                 <c:choose>
                     <c:when test="${answer.tasq.question.QType == DQ}">
                         <form method="post" id="form_${answer.id}">
@@ -63,11 +61,19 @@
             <p>مجموع نمرات کسب شده دانشجو : </p>
         </td>
         <td>
-            <p id="totalScore">
+            <p id="totalScore" class="timer">
                 <c:if test="${test_student.totalScore != null}">
                     <c:out value="${test_student.totalScore}"/>
                 </c:if>
             </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>مجموع کل نمرات آزمون</p>
+        </td>
+        <td>
+            <p><c:out value="${test_student.test.testScore}"/></p>
         </td>
     </tr>
 </table>

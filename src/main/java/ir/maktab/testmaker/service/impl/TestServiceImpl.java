@@ -28,4 +28,10 @@ public class TestServiceImpl implements TestService {
     public Test findTestByIdWithStudents(Long id) {
         return testRepository.findTestByIdWithStudents(id);
     }
+
+    @Override
+    @Transactional
+    public Test save(Test test) {
+        return testRepository.save(test);
+    }
 }

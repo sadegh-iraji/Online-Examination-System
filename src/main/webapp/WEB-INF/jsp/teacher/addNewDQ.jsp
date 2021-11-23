@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <td align='right'><label for='score'>نمره پیش فرض سوال : </label></td>
-            <td align='left'><input type="number" name="score" id="score" min="0" value="0"></td>
+            <td align='left'><input type="number" name="score" id="score" min="0" step="0.1" value="0"></td>
         </tr>
         <tr>
             <td><input type="hidden" name="testId" value="${test.id}"/></td>

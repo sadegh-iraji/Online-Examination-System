@@ -19,4 +19,6 @@ public interface Test_StudentService {
     Test_Student findTest_StudentByIdWithAnswers(Long id);
 
     List<Test_Student> findTest_StudentsByTest(Test test);
+
+    List<Test_Student> findTest_StudentsByStudent(Student student);
 }

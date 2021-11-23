@@ -24,4 +24,6 @@ public interface Test_StudentRepository extends JpaRepository<Test_Student, Long
     Test_Student findTest_StudentByIdWithAnswers(@Param("id") Long id);
 
     List<Test_Student> findTest_StudentsByTest(Test test);
+
+    List<Test_Student> findTest_StudentsByStudent(Student student);
 }

@@ -18,6 +18,7 @@
 <div id='divMenu'>
     <ul>
         <li><a href='student/studentCourses'>مشاهده لیست دوره های دانشجو</a></li>
+        <li><a href='student/testResults'>مشاهده نتایج آزمون های دانشجو</a></li>
         <li><a href='/logout'>خروج</a></li>
     </ul>
 </div>

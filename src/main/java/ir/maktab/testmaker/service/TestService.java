@@ -10,4 +10,6 @@ public interface TestService {
     Test findTestById(Long id);
 
     Test findTestByIdWithStudents(Long id);
+
+    Test save(Test test);
 }

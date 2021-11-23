@@ -190,4 +190,17 @@ public class StudentController {
         }
         return "/student/finishTest";
     }
+
+    @GetMapping("testResults")
+    public String testResults(ModelMap modelMap) {
+        Student student = studentService.findStudentByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Test_Student> test_studentsByStudent = test_studentService.findTest_StudentsByStudent(student);
+        if (test_studentsByStudent.isEmpty()) {
+            modelMap.addAttribute("message", "شما در آزمونی شرکت نکرده اید");
+        } else {
+            test_studentsByStudent.removeIf(test_student -> test_student.getFinishTime().isAfter(LocalDateTime.now()));
+            modelMap.addAttribute("test_student", test_studentsByStudent);
+        }
+        return "/student/testResults";
+    }
 }

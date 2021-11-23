@@ -43,4 +43,9 @@ public class Test_StudentServiceImpl implements Test_StudentService {
     public List<Test_Student> findTest_StudentsByTest(Test test) {
         return test_studentRepository.findTest_StudentsByTest(test);
     }
+
+    @Override
+    public List<Test_Student> findTest_StudentsByStudent(Student student) {
+        return test_studentRepository.findTest_StudentsByStudent(student);
+    }
 }

@@ -23,7 +23,7 @@
 <h1>برگزاری آزمون</h1>
 <h2>آزمون <c:out value="${test.subject}"/></h2>
 
-<div><span id="time">--:--</span></div>
+<div class="timer"><span id="time">--:--</span></div>
 
 <c:set value="${tasqList}" var="tasqPageList"/>
 <c:set value="false" var="flag"/>
