@@ -17,7 +17,7 @@
 <h1>نتایج آزمون های دانشجو</h1>
 <c:choose>
     <c:when test="${not empty message || empty test_student}">
-        <c:out value="${message}"/>
+       <h2> <c:out value="${message}"/></h2>
     </c:when>
     <c:otherwise>
         <table align="center" class="border-table">

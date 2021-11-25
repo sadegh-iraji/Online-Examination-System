@@ -64,10 +64,12 @@ public class StudentController {
         List<Test> courseTests = course.getTests();
         Student student = studentService.findStudentById(Long.parseLong(studentId));
         /*check if student had this test before and test time is passed*/
-        for (Test courseTest : courseTests) {
-            Optional<Test_Student> optionalTest_student = test_studentService.findTest_StudentsByTestAndStudent(courseTest, student);
+
+        for (int i = 0; i < courseTests.size(); i++) {
+            Optional<Test_Student> optionalTest_student = test_studentService.findTest_StudentsByTestAndStudent(courseTests.get(i), student);
             if (optionalTest_student.isPresent() && (optionalTest_student.get().getFinishTime().isBefore(LocalDateTime.now()))) {
-                courseTests.remove(courseTest);
+                courseTests.remove(courseTests.get(i));
+                i -= 1;
             }
         }
         modelMap.addAttribute("course", course);
